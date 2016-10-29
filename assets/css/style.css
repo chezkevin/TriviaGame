@@ -1,0 +1,22 @@
+h1,
+#data-question,
+#data-choices{
+	text-align: center;
+}
+
+.questions{
+	margin: 0 auto;
+	width: 40%;
+}
+
+#next{
+	color: black;
+	float: right;
+	display: none;
+}
+.radio input[type="radio"]{
+    margin-left: -15px;
+}
+.radio label{
+	display: block;
+}
