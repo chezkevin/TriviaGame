@@ -1,7 +1,15 @@
 h1,
 #data-question,
-#data-choices{
+#data-choices,
+.done-page{
 	text-align: center;
+}
+a#start-over{
+	display: none;
+}
+.btn-default{
+    width: 50%;
+    margin: 0 auto;
 }
 
 .questions{
