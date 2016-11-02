@@ -4,7 +4,6 @@ window.onload = function(){
 };
 
 var counter;
-
 var quiz = {
 	numQxn: 0,
 	gameOver: false,
@@ -25,6 +24,9 @@ var quiz = {
 	answer: ["Peter Parker",
 				"Foggy Nelson",
 				"Spider-size"],
+	answerImage: ['<img src="assets/images/Spider-Man_Unmasked.png">',
+					'<img src="assets/images/Nelson_and_Murdock.png">',
+					'<img src="assets/images/spider-size.png">'],
 
 	start: function(){
 		$('#start').css("display","none");
@@ -44,11 +46,11 @@ var quiz = {
 		$('.timer').html("Time remaining: " + quiz.time + " seconds");
 		quiz.clearQxn();
 		quiz.clearAnswer();
+		// If done with all questions, go to final page
 		if ( quiz.numQxn >= quiz.questions.length){
 			quiz.donePage();
 			return;
 		}
-		console.log("quiz.questions[number]" , quiz.questions[number] + "quiz.numQxn" , quiz.numQxn);
 		$('#data-question').html(quiz.questions[number]);
 		quiz.parseChoices(number);
 	},
@@ -75,7 +77,7 @@ var quiz = {
 	},
 	parseChoices: function(number){
 		var choiceArray = quiz.choices[number].split(',');
-		console.log(choiceArray);
+		// Display all choices as radio buttons
 		for (var i = 0; i < choiceArray.length; i++){
 			var choiceHtmlLabel = $( '<label>' );
 			var choiceHtmlInput = $('<input/>').attr({
@@ -89,11 +91,13 @@ var quiz = {
 		quiz.isRight(quiz.numQxn);
 	},
 	isRight: function(number,isAnswered){
-		console.log("you hit isRight");
 		if (isAnswered === false){
 			quiz.numUnanswered = quiz.numUnanswered + 1;
 		    quiz.answerPage(number);
 		}
+		// If user put in right or wrong answer,
+		// increment the correct counter, clear timer,
+		// and go to answer page
 		$("input[name='optionsRadios']").change(function(){
 		    if (this.id === quiz.answer[number]) {
 		    	quiz.numRight = quiz.numRight + 1;
@@ -105,7 +109,6 @@ var quiz = {
 		    	clearInterval(quiz.counter);
 		    	quiz.answerPage(number,false);
 		    }
-		    console.log("numRight: " + quiz.numRight + "   numWrong: " + quiz.numWrong);
 		});		
 	},
 	answerPage: function(number, right){
@@ -118,10 +121,13 @@ var quiz = {
 			$('.right-wrong').html("Wrong!");
 		}
 		$('.right-answer').html("The correct answer was: " + quiz.answer[number]);
+		$('.right-answer').append("<br>" + quiz.answerImage[number]);
 	},
 	donePage: function(){
+		// Stop all of the timers.
 		clearInterval(quiz.counter);
 		clearInterval(quiz.counterAsr);
+		// Populate HTML for final page.
 		$('.all-done').html("All done! Here's how you did!");
 		$('.num-right').html("Correct Answers: " + quiz.numRight);
 		$('.num-wrong').html("Incorrect Answers: " + quiz.numWrong);
