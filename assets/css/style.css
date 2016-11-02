@@ -1,8 +1,17 @@
 h1,
 #data-question,
 #data-choices,
-.done-page{
+.done-page,
+.timer,
+.right-answer{
 	text-align: center;
+}
+h4,
+.btn-lg{
+	font-size: 25px	;
+}
+.radio label{
+	font-size:18px;
 }
 a#start-over{
 	display: none;

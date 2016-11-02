@@ -11,7 +11,11 @@ var quiz = {
 	numRight: 0,
 	numWrong: 0,
 	numUnanswered: 0,
-	time: 30,
+	time: 5,
+	timeAsr: 3,
+	counter: null,
+	counterAsr: null,
+
 	questions: ["1. What is Spider-Man's alter ego?",
 				"2. Who is Matt Murdock's partner in law?",
 				"3. Which of these is NOT one of Spider-Man's superpowers?"],
@@ -35,15 +39,39 @@ var quiz = {
 		$('.right-answer').empty();
 	},
 	displayQxn: function(number){
-		quiz.time = 30;
+		quiz.time = 5;
+		quiz.counter = setInterval(quiz.timerQxn, 1000);
+		$('.timer').html("Time remaining: " + quiz.time + " seconds");
 		quiz.clearQxn();
 		quiz.clearAnswer();
-		if ( quiz.numRight + quiz.numWrong === quiz.questions.length){
+		if ( quiz.numQxn >= quiz.questions.length){
 			quiz.donePage();
+			return;
 		}
+		console.log("quiz.questions[number]" , quiz.questions[number] + "quiz.numQxn" , quiz.numQxn);
 		$('#data-question').html(quiz.questions[number]);
 		quiz.parseChoices(number);
-		//$('#next').css("display","block");
+	},
+	timerQxn: function(){
+    	quiz.time = quiz.time - 1;
+    	$(".timer").html("Time remaining: " + quiz.time + " seconds");
+    	console.log(quiz.time);
+    	if (quiz.time === 0) {
+    		clearInterval(quiz.counter);
+    		quiz.clearQxn();
+    		quiz.isRight(quiz.numQxn,false);
+	    }
+	    quiz.timeAsr = 3;
+	},
+	timerAnswer: function(){
+    	quiz.timeAsr = quiz.timeAsr - 1;
+    	console.log(quiz.timeAsr,"(answer)");
+    	if (quiz.timeAsr <= 0) {
+    		clearInterval(quiz.counterAsr);
+    		quiz.clearQxn();
+    		quiz.numQxn = quiz.numQxn + 1;
+			quiz.displayQxn(quiz.numQxn);
+	    }
 	},
 	parseChoices: function(number){
 		var choiceArray = quiz.choices[number].split(',');
@@ -60,40 +88,40 @@ var quiz = {
 		}
 		quiz.isRight(quiz.numQxn);
 	},
-	isRight: function(number){
-		var isRight = false;
+	isRight: function(number,isAnswered){
+		console.log("you hit isRight");
+		if (isAnswered === false){
+			quiz.numUnanswered = quiz.numUnanswered + 1;
+		    quiz.answerPage(number);
+		}
 		$("input[name='optionsRadios']").change(function(){
-			console.log('Your choice: ' + this.id);
-			console.log('The right answer: ' + quiz.answer[number]);
 		    if (this.id === quiz.answer[number]) {
 		    	quiz.numRight = quiz.numRight + 1;
-		    	console.log("hey display the page");
+		    	clearInterval(quiz.counter);
 		    	quiz.answerPage(number,true);
 		    }
 		    else if(this.id != quiz.answer[number]){
 		    	quiz.numWrong = quiz.numWrong + 1;
+		    	clearInterval(quiz.counter);
 		    	quiz.answerPage(number,false);
 		    }
-		    else{
-		    	quiz.answerPage(number);
-		    }
 		    console.log("numRight: " + quiz.numRight + "   numWrong: " + quiz.numWrong);
-		});
+		});		
 	},
 	answerPage: function(number, right){
+		quiz.counterAsr = setInterval(quiz.timerAnswer, 1000);
+		quiz.clearQxn();
 		if (right === true){
-			console.log("why won't you display the page");
 			$('.right-wrong').html("Right!");
 		}
 		else{
 			$('.right-wrong').html("Wrong!");
 		}
 		$('.right-answer').html("The correct answer was: " + quiz.answer[number]);
-		quiz.clearQxn();
-		quiz.numQxn = quiz.numQxn + 1;
-		var Timer = setTimeout(quiz.displayQxn(quiz.numQxn), 2*1000);
 	},
 	donePage: function(){
+		clearInterval(quiz.counter);
+		clearInterval(quiz.counterAsr);
 		$('.all-done').html("All done! Here's how you did!");
 		$('.num-right').html("Correct Answers: " + quiz.numRight);
 		$('.num-wrong').html("Incorrect Answers: " + quiz.numWrong);
