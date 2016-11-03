@@ -17,16 +17,24 @@ var quiz = {
 
 	questions: ["1. What is Spider-Man's alter ego?",
 				"2. Who is Matt Murdock's partner in law?",
-				"3. Which of these is NOT one of Spider-Man's superpowers?"],
+				"3. Which of these is NOT one of Spider-Man's superpowers?",
+				"4. In what year did Captain America first appear in comics?",
+				"5. Jessica Jones was first introduced in Alias #1, by which creative team?"],
 	choices: ["Jon Hamm,Peter Parker,Steve Rogers,Tony Stark",
 				"Roy Rogers,Harley Quinn,Oliver Queen,Foggy Nelson",
-				"Heightened Senses,Wall-climbing,Spider-size,Web-spinning"],
+				"Heightened Senses,Wall-climbing,Spider-size,Web-spinning",
+				"1939,1941,1943,1945",
+				"Brian Bendis and Michael Gaydos,Brian Bendis and Mark Bagley,Mark Waid and Mark Bagley,Mark Waid and Michael Gaydos"],
 	answer: ["Peter Parker",
 				"Foggy Nelson",
-				"Spider-size"],
+				"Spider-size",
+				"1941",
+				"Brian Bendis and Michael Gaydos"],
 	answerImage: ['<img src="assets/images/Spider-Man_Unmasked.PNG">',
 					'<img src="assets/images/Nelson_and_Murdock.PNG">',
-					'<img src="assets/images/spider-size.PNG">'],
+					'<img src="assets/images/spider-size.PNG">',
+					'<img src="assets/images/captainamerica.PNG">',
+					'<img src="assets/images/jessicajones.PNG">'],
 
 	start: function(){
 		$('#start').css("display","none");
