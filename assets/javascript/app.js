@@ -10,8 +10,8 @@ var quiz = {
 	numRight: 0,
 	numWrong: 0,
 	numUnanswered: 0,
-	time: 5,
-	timeAsr: 3,
+	time: 10,
+	timeAsr: 5,
 	counter: null,
 	counterAsr: null,
 
@@ -49,7 +49,7 @@ var quiz = {
 		$('.right-answer').empty();
 	},
 	displayQxn: function(number){
-		quiz.time = 5;
+		quiz.time = 10;
 		quiz.counter = setInterval(quiz.timerQxn, 1000);
 		$('.timer').html("Time remaining: " + quiz.time + " seconds");
 		quiz.clearQxn();
@@ -64,6 +64,8 @@ var quiz = {
 	},
 	timerQxn: function(){
     	quiz.time = quiz.time - 1;
+    	// display the question for 10 seconds.
+    	// then, move on to check the user's guess
     	$(".timer").html("Time remaining: " + quiz.time + " seconds");
     	console.log(quiz.time);
     	if (quiz.time === 0) {
@@ -71,11 +73,12 @@ var quiz = {
     		quiz.clearQxn();
     		quiz.isRight(quiz.numQxn,false);
 	    }
-	    quiz.timeAsr = 3;
+	    quiz.timeAsr = 5;
 	},
 	timerAnswer: function(){
     	quiz.timeAsr = quiz.timeAsr - 1;
-    	console.log(quiz.timeAsr,"(answer)");
+    	// display the answer page for 5 seconds
+    	// then, move on to display the next question
     	if (quiz.timeAsr <= 0) {
     		clearInterval(quiz.counterAsr);
     		quiz.clearQxn();
@@ -99,6 +102,7 @@ var quiz = {
 		quiz.isRight(quiz.numQxn);
 	},
 	isRight: function(number,isAnswered){
+		// user didn't answer the question
 		if (isAnswered === false){
 			quiz.numUnanswered = quiz.numUnanswered + 1;
 		    quiz.answerPage(number);
@@ -119,6 +123,8 @@ var quiz = {
 		    }
 		});		
 	},
+	// displays the answer on the page, whether guess was correct,
+	// answer image
 	answerPage: function(number, right){
 		quiz.counterAsr = setInterval(quiz.timerAnswer, 1000);
 		quiz.clearQxn();
