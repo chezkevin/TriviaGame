@@ -24,9 +24,9 @@ var quiz = {
 	answer: ["Peter Parker",
 				"Foggy Nelson",
 				"Spider-size"],
-	answerImage: ['<img src="assets/images/Spider-Man_Unmasked.png">',
-					'<img src="assets/images/Nelson_and_Murdock.png">',
-					'<img src="assets/images/spider-size.png">'],
+	answerImage: ['<img src="./assets/images/Spider-Man_Unmasked.png">',
+					'<img src="./assets/images/Nelson_and_Murdock.png">',
+					'<img src="./assets/images/spider-size.png">'],
 
 	start: function(){
 		$('#start').css("display","none");
